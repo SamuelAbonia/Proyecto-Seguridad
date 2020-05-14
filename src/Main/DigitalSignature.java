@@ -1,10 +1,21 @@
 package Main;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.security.*;
 import java.security.spec.*;
+import java.util.Base64;
+import java.util.Base64.Decoder;
+
 
 public class DigitalSignature {
+	
+	public DigitalSignature() {
+		// TODO Auto-generated constructor stub
+
+	}
 	
 	// We need the next files:
 	// - the public key
@@ -14,25 +25,47 @@ public class DigitalSignature {
 	
 	public  String verifyDigitalSignature(String[] args) {
 		
+		
 			String answer = "";
 		
 			try {
 			
 			
-			// first Input and Convert the Encoded Public Key Bytes
-			FileInputStream keyfis = new FileInputStream(args[0]);
-			byte[] encKey = new byte[keyfis.available()];  
-			keyfis.read(encKey);
+//			// first Input and Convert the Encoded Public Key Bytes
+//			FileInputStream keyfis = new FileInputStream(args[0]);
+//			byte[] encKey = new byte[keyfis.available()];  
+//			keyfis.read(encKey);
+//
+//			keyfis.close();
+//			
+//		    Path path = Paths.get(args[0]);
+//		    byte[] bytes = Files.readAllBytes(path);
+//		    	 
+//			X509EncodedKeySpec pubKeySpec = new X509EncodedKeySpec(bytes);
+//			
+//			KeyFactory keyFactory = KeyFactory.getInstance("RSA");
+//			
+//			PublicKePublicKey pubKey = keyFactory.generatePublic(pubKeySpec);y pubKey = keyFactory.generatePublic(pubKeySpec);
+			
+				 File f = new File(args[0]);
+		          FileInputStream fis = new FileInputStream(f);
+		          DataInputStream dis = new DataInputStream(fis);
+		          byte[] keyBytes = new byte[(int) f.length()];
+		          dis.readFully(keyBytes);
+		          dis.close();
 
-			keyfis.close();
-			
-			
-			X509EncodedKeySpec pubKeySpec = new X509EncodedKeySpec(encKey);
-			
-			KeyFactory keyFactory = KeyFactory.getInstance("RSA");
-			
-			PublicKey pubKey = keyFactory.generatePublic(pubKeySpec);
-			
+		          String temp = new String(keyBytes);
+		          String publicKeyPEM = temp.replace("-----BEGIN RSA PUBLIC KEY-----\n", "");
+		          publicKeyPEM = publicKeyPEM.replace("\n-----END RSA PUBLIC KEY-----\n", "");
+
+
+		          Decoder b64= Base64.getDecoder();
+		          byte[] decoded = b64.decode(publicKeyPEM);
+
+		          X509EncodedKeySpec spec =
+		                new X509EncodedKeySpec(decoded);
+		          KeyFactory kf = KeyFactory.getInstance("RSA");
+		          PublicKey pubKey = kf.generatePublic(spec);
 			
 			
 			

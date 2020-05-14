@@ -28,14 +28,27 @@
 ## Dificultades
 
 Para relizar el presente proyecto no se presentaron muchas dificultades en los desarrollos indiviales, sin embargo en la 
-integración de las funcionalidades presento ciertos inconvenientes al conectar con la interfaz.
+integración de las funcionalidades presento ciertos inconvenientes al conectar con la interfaz y al conectar las funcionalidades entre si.
 
 Sin embargo listamos aqui las dificultades encontradas :
 
 * Comprender el funcionamientos de los métodos que usa la API criptografica de Java para realizar las funcionalidad de firma de
-archivos
+archivos.
 
+* Comprender las diferentes codificaciones que existen para exportar las llaves e importarlas. 
+
+* Encontrar la manera correcta de leer los archivos para importar las claves.
+
+* No supimos como ponerle clave al archivo de la clave privada.
 
 
 ## Conclusiones
+
+* Es necesario saber, desde los diferentes lenguajes de programación como Java, implementar estrategias de seguridad. 
+
+* Existen diferentes brechas de seguridad en las aplicaciones y es importante conocer las diferentes maneras que existen para sobrepasar esas brechas.
+
+* Es necesario conocer como funcionan la seguridad de los archivos, haciendo uso de claves privadas y publicas para compartir información.
+
+* 
 

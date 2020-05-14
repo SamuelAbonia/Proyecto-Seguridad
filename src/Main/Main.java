@@ -1,6 +1,10 @@
 package Main;
 
 import java.io.IOException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+import java.security.SignatureException;
+import java.security.spec.InvalidKeySpecException;
 import java.util.Scanner;
 
 public class Main {
@@ -27,9 +31,10 @@ public class Main {
 		System.out.println(bienvenida);
 		
 		Scanner scan = new Scanner(System.in);
-		String reader = scan.next();
+		String reader = "";
 		
 		while(!reader.equalsIgnoreCase("Exit")) {
+			reader = scan.next();
 			if(reader.equals("1")) {
 				String opciones = "Generando archivos\n"
 						+ "----------------"
@@ -48,7 +53,37 @@ public class Main {
 				System.out.println(opciones);
 				
 			}else if(reader.equals("2")) {
-				String opciones = "Ahora ingrese ";
+				
+				String opciones = "Ahora ingrese las siguientes rutas\n"
+						+ "1: Ruta del archivo a firmar\n"
+						+ "2: Ruta del archivo con de llave privada\n"
+						+ "3: Ruta donde guardar el archivo";
+				
+				System.out.println(opciones);
+				String toSign = scan.next();
+				String pvt = scan.next();
+				String saved = scan.next();
+				
+				Firma firma = new Firma();
+				try {
+					firma.signature(toSign, pvt, saved);
+				} catch (InvalidKeyException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (NoSuchAlgorithmException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (SignatureException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (InvalidKeySpecException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
 				
 				
 			}else if(reader.equals("3")) {
@@ -61,10 +96,12 @@ public class Main {
 				String[] rutas = new String[3];
 				while(cantidad<=2) {
 					rutas[cantidad] = scan.next();
-					System.out.println(cantidad);
+
 					cantidad++;
 				}
-				System.out.println(rutas);
+				DigitalSignature digitalSignature = new DigitalSignature();
+				System.out.println(digitalSignature.verifyDigitalSignature(rutas));
+				
 			}
 			
 		}
